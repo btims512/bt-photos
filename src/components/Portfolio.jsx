@@ -74,7 +74,7 @@ export default function Portfolio() {
             ×
           </button>
           <img
-            src={lightbox.src.replace('w=800', 'w=1400')}
+            src={lightbox.src}
             alt={lightbox.alt}
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
