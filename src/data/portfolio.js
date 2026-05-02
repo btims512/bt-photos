@@ -18,6 +18,16 @@ const realEstateImports = import.meta.glob(
   { eager: true }
 )
 
+const petsImports = import.meta.glob(
+  '../assets/Pets/optimized/*.jpg',
+  { eager: true }
+)
+
+const newbornImports = import.meta.glob(
+  '../assets/Newborn/optimized/*.jpg',
+  { eager: true }
+)
+
 // Pre-computed orientations from actual image dimensions
 const ORIENTATIONS = {
   'btp-20.jpg': 'portrait', 'btp-30.jpg': 'landscape', 'btp-31.jpg': 'portrait',
@@ -56,11 +66,52 @@ const ORIENTATIONS = {
   'btp-4.jpg': 'landscape', 'btp-42.jpg': 'portrait', 'btp-43.jpg': 'portrait',
   'btp-44.jpg': 'landscape', 'btp-45.jpg': 'landscape', 'btp-46.jpg': 'portrait',
   'btp-83.jpg': 'landscape', 'btp-84.jpg': 'landscape',
+  'btp-101.jpg': 'landscape', 'btp-102.jpg': 'portrait', 'btp-103.jpg': 'portrait',
+  'btp-104.jpg': 'landscape', 'btp-105.jpg': 'portrait', 'btp-106.jpg': 'portrait',
+  'btp-114.jpg': 'portrait', 'btp-115.jpg': 'landscape', 'btp-123.jpg': 'portrait',
+  'btp-13.jpg': 'landscape', 'btp-132.jpg': 'portrait', 'btp-136.jpg': 'landscape',
+  'btp-14.jpg': 'landscape', 'btp-15.jpg': 'portrait', 'btp-16.jpg': 'landscape',
+  'btp-17.jpg': 'landscape', 'btp-37.jpg': 'portrait', 'btp-38.jpg': 'landscape',
+  'btp-68.jpg': 'portrait',
+  'btp-24-Edit-Edit.jpg': 'landscape',
+  'btp-10.jpg': 'landscape', 'btp-140.jpg': 'landscape', 'btp-85.jpg': 'portrait',
+  'btp-93.jpg': 'portrait', 'btp-97.jpg': 'landscape', 'btp-98.jpg': 'portrait',
+  'btp-99.jpg': 'landscape',
 }
 
 const getSpan = (path) => {
   const filename = path.split('/').pop()
   return ORIENTATIONS[filename] === 'portrait' ? 'row-span-2' : ''
+}
+
+// Favorites shown first in All view and at top of their category
+const FEATURED = [
+  'btp-135.jpg', 'btp-28.jpg', 'btp-32.jpg', 'btp-47.jpg', 'btp-72.jpg',
+  'btp-82.jpg', 'btp-101.jpg', 'btp-13.jpg', 'btp-93.jpg',
+  'btp-36.jpg', 'btp-141.jpg', 'btp-43.jpg', 'btp-139.jpg',
+  'btp-24-Edit-Edit.jpg', 'btp-81.jpg', 'btp-130-Edit-Edit.jpg', 'btp-75.jpg',
+]
+
+const interleave = (...arrays) => {
+  const result = []
+  const max = Math.max(...arrays.map((a) => a.length))
+  for (let i = 0; i < max; i++) {
+    arrays.forEach((arr) => { if (arr[i]) result.push(arr[i]) })
+  }
+  return result
+}
+
+const pin = (...categoryArrays) => {
+  // Move each category's featured photos to the front of that category,
+  // then interleave all categories so the result alternates Portrait, Events, Landscape...
+  const reordered = categoryArrays.map((arr) => {
+    const byFilename = {}
+    arr.forEach((p) => { byFilename[p.src.split('/').pop()] = p })
+    const featured = FEATURED.map((f) => byFilename[f]).filter(Boolean)
+    const featuredIds = new Set(featured.map((p) => p.id))
+    return [...featured, ...arr.filter((p) => !featuredIds.has(p.id))]
+  })
+  return interleave(...reordered)
 }
 
 const EXCLUDED_LANDSCAPES = ['btp-69-1.jpg']
@@ -76,6 +127,12 @@ const eventsFiles = Object.entries(eventsImports)
   .sort(([a], [b]) => a.localeCompare(b))
 
 const realEstateFiles = Object.entries(realEstateImports)
+  .sort(([a], [b]) => a.localeCompare(b))
+
+const petsFiles = Object.entries(petsImports)
+  .sort(([a], [b]) => a.localeCompare(b))
+
+const newbornFiles = Object.entries(newbornImports)
   .sort(([a], [b]) => a.localeCompare(b))
 
 const landscapePhotos = landscapeFiles.map(([path, mod], i) => ({
@@ -110,15 +167,25 @@ const realEstatePhotos = realEstateFiles.map(([path, mod], i) => ({
   span: getSpan(path),
 }))
 
-export const categories = ['All', 'Portrait', 'Events', 'Landscape', 'Real Estate']
+const petsPhotos = petsFiles.map(([path, mod], i) => ({
+  id: 2000 + i,
+  category: 'Pets',
+  src: mod.default,
+  alt: `Pet photography ${i + 1}`,
+  span: getSpan(path),
+}))
 
-const interleave = (...arrays) => {
-  const result = []
-  const max = Math.max(...arrays.map((a) => a.length))
-  for (let i = 0; i < max; i++) {
-    arrays.forEach((arr) => { if (arr[i]) result.push(arr[i]) })
-  }
-  return result
-}
+const newbornPhotos = newbornFiles.map(([path, mod], i) => ({
+  id: 2500 + i,
+  category: 'Newborn',
+  src: mod.default,
+  alt: `Newborn photography ${i + 1}`,
+  span: getSpan(path),
+}))
 
-export const photos = interleave(portraitPhotos, eventsPhotos, landscapePhotos, realEstatePhotos)
+export const categories = ['All', 'Portrait', 'Events', 'Real Estate', 'Pets', 'Newborn']
+
+export const photos = pin(
+  portraitPhotos, eventsPhotos, landscapePhotos,
+  realEstatePhotos, petsPhotos, newbornPhotos,
+)

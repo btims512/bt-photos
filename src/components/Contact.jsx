@@ -51,11 +51,11 @@ export default function Contact() {
 
           <div className="flex flex-col gap-4">
             <a
-              href="mailto:hello@benjamintims.com"
+              href="mailto:info@bentims.com"
               className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors text-sm"
             >
               <Mail size={16} strokeWidth={1.5} />
-              hello@benjamintims.com
+              info@bentims.com
             </a>
             <a
               href="https://instagram.com/benjammin.visuals"
@@ -130,9 +130,11 @@ export default function Contact() {
                 >
                   <option value="">Select a service…</option>
                   <option>Portrait</option>
-                  <option>Wedding</option>
-                  <option>Landscape / Fine Art</option>
-                  <option>Commercial</option>
+                  <option>Events</option>
+                  <option>Maternity &amp; Newborn</option>
+                  <option>Real Estate &amp; Airbnb</option>
+                  <option>Pets</option>
+                  <option>Landscape</option>
                   <option>Other</option>
                 </select>
               </div>

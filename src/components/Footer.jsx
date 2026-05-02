@@ -23,12 +23,12 @@ export default function Footer() {
           <a href="https://instagram.com/benjammin.visuals" target="_blank" rel="noreferrer" className="text-neutral-600 hover:text-white transition-colors">
             <InstagramIcon size={16} />
           </a>
-          <a href="mailto:hello@benjamintims.com" className="text-neutral-600 hover:text-white transition-colors">
+          <a href="mailto:info@bentims.com" className="text-neutral-600 hover:text-white transition-colors">
             <Mail size={16} strokeWidth={1.5} />
           </a>
         </div>
         <p className="text-neutral-700 text-xs">
-          © {year} Benjamin Tims. All rights reserved.
+          © {year} BTP Photography LLC. All rights reserved.
         </p>
       </div>
     </footer>
