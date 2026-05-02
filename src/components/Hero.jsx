@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
-import btp75 from '../assets/Landscapes/optimized/btp-75.jpg'
-import btp24 from '../assets/Landscapes/optimized/btp-24-Edit-2.jpg'
-import btp691 from '../assets/Landscapes/optimized/btp-69-1.jpg'
-import btp71 from '../assets/Portraits/optimized/btp-71.jpg'
+import btp75 from '../assets/Landscapes/btp-75.jpg'
+import btp24 from '../assets/Landscapes/btp-24-Edit-2.jpg'
+import btp691 from '../assets/Landscapes/btp-69-1.jpg'
+import btp71 from '../assets/Portraits/btp-71.jpg'
 
 const BG_PHOTOS = [
   { src: btp75,  position: 'center center' },

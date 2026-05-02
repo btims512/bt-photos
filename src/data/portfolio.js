@@ -1,30 +1,30 @@
 const landscapeImports = import.meta.glob(
-  '../assets/Landscapes/optimized/*.jpg',
+  '../assets/Landscapes/*.jpg',
   { eager: true }
 )
 
 const portraitImports = import.meta.glob(
-  '../assets/Portraits/optimized/*.jpg',
+  '../assets/Portraits/*.jpg',
   { eager: true }
 )
 
 const eventsImports = import.meta.glob(
-  '../assets/Events/optimized/*.jpg',
+  '../assets/Events/*.jpg',
   { eager: true }
 )
 
 const realEstateImports = import.meta.glob(
-  '../assets/Real Estate/optimized/*.jpg',
+  '../assets/Real Estate/*.jpg',
   { eager: true }
 )
 
 const petsImports = import.meta.glob(
-  '../assets/Pets/optimized/*.jpg',
+  '../assets/Pets/*.jpg',
   { eager: true }
 )
 
 const newbornImports = import.meta.glob(
-  '../assets/Newborn/optimized/*.jpg',
+  '../assets/Newborn/*.jpg',
   { eager: true }
 )
 
